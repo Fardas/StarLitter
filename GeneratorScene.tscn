@@ -37,7 +37,8 @@ label_settings = SubResource("LabelSettings_v2u60")
 position = Vector2(1773, 1140)
 zoom = Vector2(0.25, 0.25)
 script = ExtResource("2_v2u60")
-MoveSpeed = 600.0
+MoveSpeed = 800.0
+ZoomSpeed = 0.05
 
 [node name="Area2D" type="Area2D" parent="."]
 metadata/_edit_lock_ = true
@@ -59,9 +60,18 @@ metadata/_edit_lock_ = true
 position = Vector2(1695, 406)
 scale = Vector2(1, 0.997106)
 script = ExtResource("3_cok7a")
-Logarithmic = 8.0
+Logarithmic = 5.0
 MaxDistance = 200.0
-StarCount = 60
+StarCount = 20
+MinDistance = 8.0
+
+[node name="Marker2D4" type="Marker2D" parent="Anchors"]
+position = Vector2(1702, 412)
+scale = Vector2(1, 0.99422)
+script = ExtResource("3_cok7a")
+Logarithmic = 1.0
+MaxDistance = 300.0
+StarCount = 40
 MinDistance = 8.0
 
 [node name="Marker2D3" type="Marker2D" parent="Anchors"]
@@ -81,17 +91,17 @@ StarCount = 15
 MinDistance = 0.0
 
 [node name="Line2D7" type="Line2D" parent="Anchors"]
-position = Vector2(0, 1110.81)
+position = Vector2(32, 1087)
 scale = Vector2(0.995546, 0.659298)
-points = PackedVector2Array(2360, 1825.96, 1824.12, 1565.58, 1341.98, 958.879)
+points = PackedVector2Array(2360, 1825.96, 2209.84, 1601.7, 1864.3, 1710.91, 1679.48, 1346.89, 1607.16, 1055.67, 1341.98, 958.879)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
-StarCount = 80
+StarCount = 40
 
 [node name="Line2D5" type="Line2D" parent="Anchors"]
 position = Vector2(0, 573.354)
 scale = Vector2(1, 0.937394)
-points = PackedVector2Array(1291, 1227.49, 2008, 1484.59, 2414, 1292.57, 2987, 1227.49)
+points = PackedVector2Array(1288, 1322.44, 1640, 1126.15, 1968, 1245.63, 2008, 1484.59, 2224, 1416.32, 2414, 1292.57, 2656, 1407.78, 2776, 1117.62, 2987, 1227.49)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
 StarCount = 40
@@ -99,7 +109,7 @@ StarCount = 40
 [node name="Line2D6" type="Line2D" parent="Anchors"]
 position = Vector2(0, 1110.81)
 scale = Vector2(1, 0.878708)
-points = PackedVector2Array(2992, 710.347, 2880, -245.602, 2352, -637.086)
+points = PackedVector2Array(2992, 710.347, 2920, 355.28, 2648, 136.777, 2872, -136.351, 2704, -527.835, 2168, -582.461)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
 StarCount = 40
@@ -107,7 +117,7 @@ StarCount = 40
 [node name="Line2D8" type="Line2D" parent="Anchors"]
 position = Vector2(-16, 1087)
 scale = Vector2(1, 0.823695)
-points = PackedVector2Array(2352, -637.086, 1704, -81.7252, 1296, -546.044)
+points = PackedVector2Array(2352, -637.086, 2080, -155.397, 1856, -155.397, 1560, -9.7124, 1512, -378.781, 1280, -573.028)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
 StarCount = 40
@@ -115,16 +125,16 @@ StarCount = 40
 [node name="Line2D9" type="Line2D" parent="Anchors"]
 position = Vector2(24, 1174)
 scale = Vector2(1, 0.678474)
-points = PackedVector2Array(2328, -896.129, 1696, 0, 1328, -636.723)
+points = PackedVector2Array(2536, -860.755, 2216, -483.438, 1976, -518.812, 1896, -212.241, 1696, 0, 1608, -389.109, 1216, -636.723)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
-MaxDistance = 200.0
+MaxDistance = 400.0
 StarCount = 40
 
 [node name="Line2D10" type="Line2D" parent="Anchors"]
 position = Vector2(0, 2086.89)
 scale = Vector2(1, 0.772127)
-points = PackedVector2Array(2896, -580.076, 2768, -1388.23, 2488, -2030.61)
+points = PackedVector2Array(2848, -289.968, 3008, -932.349, 2720, -953.072, 2768, -1388.23, 2816, -1688.7, 2440, -1916.64)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
 MaxDistance = 400.0
@@ -133,14 +143,14 @@ StarCount = 80
 [node name="Line2D11" type="Line2D" parent="Anchors"]
 position = Vector2(16, 687)
 scale = Vector2(1, 0.878708)
-points = PackedVector2Array(1384, 1092.51, 2024, 1292.81, 2424, 1411.16, 3088, 1065.2)
+points = PackedVector2Array(1384, 1092.51, 1672, 1247.29, 1904, 1074.31, 2080, 1238.18, 2112, 1502.21, 2288, 1219.97, 2496, 1411.16, 2664, 1183.56, 3088, 1065.2)
 script = ExtResource("2_fwve4")
 Logarithmic = 2.0
 MaxDistance = 400.0
 StarCount = 80
 
 [node name="Marker2D2" type="Marker2D" parent="Anchors"]
-position = Vector2(3262, 435)
+position = Vector2(3262, 443)
 scale = Vector2(1, 0.99422)
 script = ExtResource("3_cok7a")
 Logarithmic = 2.0

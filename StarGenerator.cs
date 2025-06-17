@@ -50,6 +50,9 @@ public partial class StarGenerator : Control
 
     public static bool RenderLabel { get; set; } = false;
 
+    public static bool RenderAllWhite { get; set; } = true;
+    public static bool RenderRealisticSize { get; set; } = false;
+
     public Dictionary<(int, int), Vector2> GridPositions { get; set; } = [];
 
     public override void _Ready()
@@ -135,42 +138,23 @@ public partial class StarGenerator : Control
             if (randomStar <= smallStars)
             {
                 selectedStarSize = StarSize.Small;
+                --smallStars;
             }
             else if (randomStar <= smallStars + midStars)
             {
                 selectedStarSize = StarSize.Medium;
+                --midStars;
             }
+            else
+            {
+                selectedStarSize = StarSize.Large;
+                --largeStars;
+            }
+
             var success = false;
             while (success == false)
             {
                 success = GenerateStar(selectedStarSize);
-            }
-        }
-
-        for (var i = 0; i < SmallStars; ++i)
-        {
-            var success = false;
-            while (success == false)
-            {
-                success = GenerateStar(StarSize.Small);
-            }
-        }
-
-        for (var i = 0; i < MidStars; ++i)
-        {
-            var success = false;
-            while (success == false)
-            {
-                success = GenerateStar(StarSize.Medium);
-            }
-        }
-
-        for (var i = 0; i < LargeStars; ++i)
-        {
-            var success = false;
-            while (success == false)
-            {
-                success = GenerateStar(StarSize.Large);
             }
         }
 
@@ -179,95 +163,6 @@ public partial class StarGenerator : Control
             AddChild(star);
         }
     }
-
-    // public List<int> Get3NearestGroups(Vector2 starPosition)
-    // {
-    //     var nearestGridCoordinates = (
-    //         Math.Min(
-    //             MaxGridX - 1,
-    //             Math.Max(
-    //                 0,
-    //                 (int)Math.Round((starPosition.X - BoundMinX - GridSizeX / 2) / GridSizeX)
-    //             )
-    //         ),
-    //         Math.Min(
-    //             MaxGridY - 1,
-    //             Math.Max(
-    //                 0,
-    //                 (int)Math.Round((starPosition.Y - BoundMinY - GridSizeY / 2) / GridSizeY)
-    //             )
-    //         )
-    //     );
-
-    //     var nearestGridPosition = GridPositions[nearestGridCoordinates];
-
-    //     var xDistance = starPosition.X - nearestGridPosition.X;
-    //     var yDistance = starPosition.Y - nearestGridPosition.Y;
-    //     var grid1XOffset = xDistance < 0 ? -1 : 1;
-    //     var grid2YOffset = yDistance < 0 ? -1 : 1;
-
-    //     (int second, int third) =
-    //         Math.Abs(xDistance) < Math.Abs(yDistance)
-    //             ? (
-    //                 GroupIdFromGridPos(
-    //                     Math.Max(
-    //                         0,
-    //                         Math.Min(MaxGridX - 1, nearestGridCoordinates.Item1 + grid1XOffset)
-    //                     ),
-    //                     nearestGridCoordinates.Item2
-    //                 ),
-    //                 GroupIdFromGridPos(
-    //                     nearestGridCoordinates.Item1,
-    //                     Math.Max(
-    //                         0,
-    //                         Math.Min(MaxGridY - 1, nearestGridCoordinates.Item2 + grid2YOffset)
-    //                     )
-    //                 )
-    //             )
-    //             : (
-    //                 GroupIdFromGridPos(
-    //                     nearestGridCoordinates.Item1,
-    //                     Math.Max(
-    //                         0,
-    //                         Math.Min(MaxGridY - 1, nearestGridCoordinates.Item2 + grid2YOffset)
-    //                     )
-    //                 ),
-    //                 GroupIdFromGridPos(
-    //                     Math.Max(
-    //                         0,
-    //                         Math.Min(MaxGridX - 1, nearestGridCoordinates.Item1 + grid1XOffset)
-    //                     ),
-    //                     nearestGridCoordinates.Item2
-    //                 )
-    //             );
-
-    //     return
-    //     [
-    //         GroupIdFromGridPos(nearestGridCoordinates.Item1, nearestGridCoordinates.Item2),
-    //         second,
-    //         third,
-    //     ];
-    // }
-
-    // private int GroupIdFromGridPos(int x, int y)
-    // {
-    //     return y * MaxGridX + x;
-    // }
-
-    // public void PickGroup(Star star)
-    // {
-    //     var nearestGroupIds = Get3NearestGroups(star.Position);
-    //     if (nearestGroupIds.Any(groupId => groupId > 24))
-    //     {
-    //         GD.Print(nearestGroupIds[0], ":", nearestGroupIds[1], ":", nearestGroupIds[2]);
-    //     }
-
-    //     var randomTake = Random.Next(105);
-    //     star.GroupId =
-    //         randomTake < 15 ? nearestGroupIds[2]
-    //         : randomTake < 45 ? nearestGroupIds[1]
-    //         : nearestGroupIds[0];
-    // }
 
     public override void _Process(double delta)
     {
@@ -303,6 +198,14 @@ public partial class StarGenerator : Control
         {
             ToggleGizmos();
         }
+        if (Input.IsActionJustPressed("ui_toggle_all_white"))
+        {
+            RenderAllWhite = !RenderAllWhite;
+        }
+        if (Input.IsActionJustPressed("ui_toggle_realistic_size"))
+        {
+            RenderRealisticSize = !RenderRealisticSize;
+        }
 
         var time = Time.GetTicksMsec();
         if (Star.AnimationOn)
@@ -310,7 +213,7 @@ public partial class StarGenerator : Control
             foreach (var key in Star.GroupAlphas.Keys.OrderBy(key => key))
             {
                 Star.GroupAlphas[key] = (float)
-                    Math.Sin(2 * Math.PI * ((time / 1500.0) + RandomShiftPerGroupId[key]));
+                    Math.Sin(2 * Math.PI * ((time / 3000.0) + RandomShiftPerGroupId[key]));
             }
         }
     }

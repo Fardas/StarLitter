@@ -11,6 +11,7 @@ public partial class Star(StarSize starSize) : Node2D
     public StarSize StarSize { get; private set; } = starSize;
 
     public MeshInstance2D Mesh { get; private set; } = new MeshInstance2D();
+    public SphereMesh SphereMesh { get; private set; } = new SphereMesh();
     public Label Label { get; private set; } = new Label();
     public static bool AnimationOn { get; set; } = false;
 
@@ -25,12 +26,7 @@ public partial class Star(StarSize starSize) : Node2D
         }
         GroupCounts[GroupId] = ++value;
 
-        Mesh.Mesh = new SphereMesh
-        {
-            RadialSegments = 20,
-            Radius = (float)StarSize / 200f,
-            Height = (float)StarSize / 200f * 2f,
-        };
+        Mesh.Mesh = SphereMesh;
         AddChild(Mesh);
         AddChild(Label);
         Mesh.Position = Vector2.Zero;
@@ -47,9 +43,16 @@ public partial class Star(StarSize starSize) : Node2D
         {
             Visible = false;
         }
+
+        SphereMesh.RadialSegments = 20;
+        SphereMesh.Radius = (float)StarSize / (StarGenerator.RenderRealisticSize ? 2000f : 250f);
+        SphereMesh.Height = (float)StarSize / (StarGenerator.RenderRealisticSize ? 1000f : 125f);
+
         Label.Visible = StarGenerator.RenderLabel;
         Mesh.Material = null;
-        Mesh.Modulate = GroupColors[GroupId % GroupColors.Count];
+        Mesh.Modulate = StarGenerator.RenderAllWhite
+            ? new(1.0f, 1.0f, 1.0f)
+            : GroupColors[GroupId % GroupColors.Count];
         Mesh._Draw();
 
         if (AnimationOn)
