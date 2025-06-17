@@ -1,0 +1,210 @@
+[gd_scene load_steps=7 format=3 uid="uid://odpyics1riom"]
+
+[ext_resource type="Script" uid="uid://o8snljlr5o7x" path="res://StarGenerator.cs" id="1_vemq5"]
+[ext_resource type="Script" uid="uid://cxsqtg5khm7lc" path="res://LineAnchor.cs" id="2_fwve4"]
+[ext_resource type="Script" uid="uid://ccrwvqi3c5o63" path="res://CameraControl.cs" id="2_v2u60"]
+[ext_resource type="Script" uid="uid://dikqlvq8qsev5" path="res://PointAnchor.cs" id="3_cok7a"]
+[ext_resource type="Script" uid="uid://eaw5ougk6828" path="res://FallingStarAnchor.cs" id="4_cok7a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2u60"]
+font_size = 50
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StarGenerator" type="Control" parent="." node_paths=PackedStringArray("Areas", "AnchorCollection", "GroupLabel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_vemq5")
+SmallStars = 440
+MidStars = 290
+LargeStars = 90
+Areas = [NodePath("../Area2D2"), NodePath("../Area2D")]
+AnchorCollection = NodePath("../Anchors")
+GroupLabel = NodePath("GroupLabel")
+RandomSeed = 20251012
+
+[node name="GroupLabel" type="Label" parent="StarGenerator"]
+layout_mode = 0
+offset_left = -104.0
+offset_top = -48.0
+offset_right = -64.0
+offset_bottom = -25.0
+label_settings = SubResource("LabelSettings_v2u60")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1773, 1140)
+zoom = Vector2(0.25, 0.25)
+script = ExtResource("2_v2u60")
+MoveSpeed = 600.0
+
+[node name="Area2D" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(50, 50, 3650, 50, 3650, 1250, 50, 1250)
+metadata/_edit_lock_ = true
+
+[node name="Area2D2" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D2"]
+polygon = PackedVector2Array(650, 1250, 3650, 1250, 3650, 2250, 650, 2250, 650, 1250)
+metadata/_edit_lock_ = true
+
+[node name="Anchors" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Anchors"]
+position = Vector2(1695, 406)
+scale = Vector2(1, 0.997106)
+script = ExtResource("3_cok7a")
+Logarithmic = 8.0
+MaxDistance = 200.0
+StarCount = 60
+MinDistance = 8.0
+
+[node name="Marker2D3" type="Marker2D" parent="Anchors"]
+position = Vector2(894, 1100)
+script = ExtResource("3_cok7a")
+Logarithmic = 2.0
+MaxDistance = 500.0
+StarCount = 60
+
+[node name="FallingStar" type="Line2D" parent="Anchors"]
+position = Vector2(0, 1110.81)
+scale = Vector2(1, 0.878708)
+points = PackedVector2Array(3304, 937.954, 3376, 910.641, 3448, 856.016, 3504, 792.286, 3568, 692.139, 3608, 591.991, 3632, 446.323, 3632, 346.176)
+script = ExtResource("4_cok7a")
+Logarithmic = 2.0
+StarCount = 15
+MinDistance = 0.0
+
+[node name="Line2D7" type="Line2D" parent="Anchors"]
+position = Vector2(0, 1110.81)
+scale = Vector2(0.995546, 0.659298)
+points = PackedVector2Array(2360, 1825.96, 1824.12, 1565.58, 1341.98, 958.879)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+StarCount = 80
+
+[node name="Line2D5" type="Line2D" parent="Anchors"]
+position = Vector2(0, 573.354)
+scale = Vector2(1, 0.937394)
+points = PackedVector2Array(1291, 1227.49, 2008, 1484.59, 2414, 1292.57, 2987, 1227.49)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+StarCount = 40
+
+[node name="Line2D6" type="Line2D" parent="Anchors"]
+position = Vector2(0, 1110.81)
+scale = Vector2(1, 0.878708)
+points = PackedVector2Array(2992, 710.347, 2880, -245.602, 2352, -637.086)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+StarCount = 40
+
+[node name="Line2D8" type="Line2D" parent="Anchors"]
+position = Vector2(-16, 1087)
+scale = Vector2(1, 0.823695)
+points = PackedVector2Array(2352, -637.086, 1704, -81.7252, 1296, -546.044)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+StarCount = 40
+
+[node name="Line2D9" type="Line2D" parent="Anchors"]
+position = Vector2(24, 1174)
+scale = Vector2(1, 0.678474)
+points = PackedVector2Array(2328, -896.129, 1696, 0, 1328, -636.723)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+MaxDistance = 200.0
+StarCount = 40
+
+[node name="Line2D10" type="Line2D" parent="Anchors"]
+position = Vector2(0, 2086.89)
+scale = Vector2(1, 0.772127)
+points = PackedVector2Array(2896, -580.076, 2768, -1388.23, 2488, -2030.61)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+MaxDistance = 400.0
+StarCount = 80
+
+[node name="Line2D11" type="Line2D" parent="Anchors"]
+position = Vector2(16, 687)
+scale = Vector2(1, 0.878708)
+points = PackedVector2Array(1384, 1092.51, 2024, 1292.81, 2424, 1411.16, 3088, 1065.2)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+MaxDistance = 400.0
+StarCount = 80
+
+[node name="Marker2D2" type="Marker2D" parent="Anchors"]
+position = Vector2(3262, 435)
+scale = Vector2(1, 0.99422)
+script = ExtResource("3_cok7a")
+Logarithmic = 2.0
+MaxDistance = 200.0
+StarCount = 60
+MinDistance = 8.0
+
+[node name="Line2D12" type="Line2D" parent="Anchors"]
+position = Vector2(0, 1843.17)
+scale = Vector2(0.991112, 0.434674)
+points = PackedVector2Array(2365.02, 772.603, 2114.8, 1030.27, 1977.58, 551.748, 1582.06, 459.725, 1259.19, -478.909)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+MaxDistance = 300.0
+StarCount = 80
+
+[node name="UnusedAnchors" type="Node2D" parent="."]
+visible = false
+
+[node name="Marker2D" type="Marker2D" parent="UnusedAnchors"]
+position = Vector2(2800, 700)
+script = ExtResource("3_cok7a")
+MaxDistance = 400.0
+StarCount = 80
+
+[node name="Marker2D2" type="Marker2D" parent="UnusedAnchors"]
+position = Vector2(1294, 1690)
+script = ExtResource("3_cok7a")
+MaxDistance = 300.0
+StarCount = 60
+
+[node name="Line2D" type="Line2D" parent="UnusedAnchors"]
+visible = false
+position = Vector2(-56, -95)
+points = PackedVector2Array(1413, 1869, 2036, 1863, 2159, 1585, 1969, 1285, 1469, 812, 1780, 473)
+script = ExtResource("2_fwve4")
+MaxDistance = 200.0
+StarCount = 150
+
+[node name="Line2D2" type="Line2D" parent="UnusedAnchors"]
+visible = false
+position = Vector2(-112, -190)
+points = PackedVector2Array(1086, 1174, 1442, 1530, 1786, 1408, 2159, 1158, 2415, 1341, 2598, 1808)
+script = ExtResource("2_fwve4")
+MaxDistance = 200.0
+StarCount = 150
+
+[node name="Line2D3" type="Line2D" parent="UnusedAnchors"]
+visible = false
+position = Vector2(-224, -380)
+points = PackedVector2Array(1437, 1926, 2032, 1865, 2087, 1526, 2165, 1092, 2482, 1109, 3049, 1359)
+script = ExtResource("2_fwve4")
+MaxDistance = 200.0
+StarCount = 150
+
+[node name="Line2D6" type="Line2D" parent="UnusedAnchors"]
+visible = false
+position = Vector2(48, 1167)
+scale = Vector2(1, 0.878708)
+points = PackedVector2Array(2688, -1356.54, 3168, -1192.45, 3664, -600.669, 3848, 309.759)
+script = ExtResource("2_fwve4")
+Logarithmic = 2.0
+MaxDistance = 400.0
+StarCount = 150
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 1304, 0, 0, 3700, 0, 3700, 2300, 600, 2300, 600, 1300, 0, 1300)
