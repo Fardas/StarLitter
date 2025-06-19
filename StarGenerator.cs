@@ -18,12 +18,7 @@ public partial class StarGenerator : Control
     public int LargeStars { get; set; } = 30;
 
     public List<Star> Stars { get; private set; } = [];
-    public readonly int MaxGridX = 6;
-    public readonly int MaxGridY = 4;
-    public float GridSizeX { get; set; }
-    public float GridSizeY { get; set; }
     public List<Node2D> Gizmos { get; set; } = [];
-    public int IdealGroupCount { get; set; }
 
     [Export]
     public Area2D[] Areas { get; private set; }
@@ -53,8 +48,6 @@ public partial class StarGenerator : Control
     public static bool RenderAllWhite { get; set; } = true;
     public static bool RenderRealisticSize { get; set; } = false;
 
-    public Dictionary<(int, int), Vector2> GridPositions { get; set; } = [];
-
     public override void _Ready()
     {
         if (RandomSeed != 0)
@@ -67,43 +60,14 @@ public partial class StarGenerator : Control
             GD.PrintErr("StarGenerator: Area is not set. Please assign an Area2D node.");
             return;
         }
-        for (int i = 0; i < MaxGridX * MaxGridY; ++i)
+        (BoundMinX, BoundMinY, BoundWidth, BoundHeight) = GetBounds();
+
+        CollectAnchors();
+
+        for (int i = 0; i <= Anchors.Count; ++i)
         {
             RandomShiftPerGroupId[i] = Random.NextDouble() * Math.PI / 2;
         }
-        (BoundMinX, BoundMinY, BoundWidth, BoundHeight) = GetBounds();
-
-        GridSizeX = BoundWidth / MaxGridX;
-        GridSizeY = BoundHeight / MaxGridY;
-        for (int i = 0; i < MaxGridX; ++i)
-        {
-            for (int j = 0; j < MaxGridY; ++j)
-            {
-                GridPositions[(i, j)] = new(
-                    i * GridSizeX + GridSizeX / 2 + BoundMinX,
-                    j * GridSizeY + GridSizeY / 2 + BoundMinY
-                );
-                Gizmos.Add(new Node2D());
-
-                MeshInstance2D mesh = new()
-                {
-                    Mesh = new SphereMesh
-                    {
-                        RadialSegments = 20,
-                        Radius = 20.0f,
-                        Height = 40.0f,
-                    },
-                    Position = GridPositions[(i, j)],
-                };
-                Gizmos.Last().AddChild(mesh);
-                Gizmos.Last().Visible = false;
-                AddChild(Gizmos.Last());
-            }
-        }
-
-        IdealGroupCount = (int)((SmallStars + MidStars + LargeStars) / (GridSizeX * GridSizeY));
-
-        CollectAnchors();
 
         var fallingStarAnchors = Anchors.Where(anchor =>
             anchor.GetType() == typeof(FallingStarAnchor)
